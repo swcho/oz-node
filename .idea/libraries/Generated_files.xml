@@ -2,10 +2,12 @@
   <library name="Generated files" type="javaScript">
     <properties>
       <sourceFilesUrls>
+        <item url="file://$PROJECT_DIR$/src/common.js" />
         <item url="file://$PROJECT_DIR$/oz-node.js" />
       </sourceFilesUrls>
     </properties>
     <CLASSES>
+      <root url="file://$PROJECT_DIR$/src/common.js" />
       <root url="file://$PROJECT_DIR$/oz-node.js" />
     </CLASSES>
     <SOURCES />

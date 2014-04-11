@@ -1,6 +1,8 @@
 {
   "name": "oz-node",
   "dependencies": {
-    "node-xmpp": "^1.0.0-alpha1"
+    "node-xmpp": "^1.0.0-alpha1",
+    "sudo": "^1.0.3",
+    "colors": "^0.6.2"
   }
 }

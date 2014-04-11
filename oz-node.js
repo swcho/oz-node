@@ -4,6 +4,7 @@
 /// <reference path="def/node.d.ts" />
 var xmpp = require('node-xmpp');
 var argv = process.argv;
+var common = require('./src/common');
 
 /*
 if (argv.length < 6) {
@@ -11,8 +12,10 @@ console.error('Usage: node send_message.js <my-jid> <my-password> <my-text> <jid
 process.exit();
 }
 */
+var userName = process.env['USER'];
+
 var cl = new xmpp.Client({
-    jid: 'humax-oz@jabber.iitsp.com/glinda',
+    jid: 'humax-oz@jabber.iitsp.com/glinda/' + userName,
     password: 'gbaortmdhwm'
 });
 
@@ -33,13 +36,13 @@ cl.on('stanza', function (stanza) {
     console.log('Incoming stanza: ', stanza.toString());
 
     if (stanza.is('message') && (stanza.attrs.type !== 'error')) {
-        // Swap addresses...
-        stanza.attrs.to = stanza.attrs.from;
-        delete stanza.attrs.from;
-
-        // and send back
-        console.log('Sending response: ' + stanza.root().toString());
-        cl.send(stanza);
+        console.log(stanza);
+        var command = stanza.getChild('body').getText();
+        console.log(command);
+        common.runCmd(command, null, function (result) {
+            var resp = new xmpp.Element('message', { to: stanza.attrs.from, type: 'chat' }).c('body').t(JSON.stringify(result));
+            cl.send(resp);
+        });
     }
 });
 
