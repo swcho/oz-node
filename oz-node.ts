@@ -48,10 +48,14 @@ cl.on('stanza', function(stanza) {
         var command = stanza.getChild('body').getText();
         console.log(command);
         common.runCmd(command, null, (result) => {
+            var text = "\n";
+            result.out.forEach((o) => {
+                text += o.line + '\n';
+            });
             var resp = new xmpp.Element(
                 'message',
                 { to: stanza.attrs.from, type: 'chat' }
-            ).c('body').t(JSON.stringify(result));
+            ).c('body').t(text);
             cl.send(resp);
         });
     }
